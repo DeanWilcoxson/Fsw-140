@@ -1,0 +1,157 @@
+-- USE avengers;
+
+-- Question1 // 
+-- Show all of the information on the Avengers.
+
+-- SELECT * from avengers;
+
+-- Question2 // 
+-- Create a new table with information from another super hero group [can be imported from elsewhere or fictitious].
+-- Make sure there is an appropriate header and must be at least 30 rows.
+
+-- CREATE TABLE `JusticeLeague` (
+--   `name` varchar(50) DEFAULT NULL
+-- ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--  INSERT INTO justiceleague VALUES
+-- ('dean'), ('Superman'), ('Batman'), 
+-- ('Aquaman'), ('WonderWoman'), ('Flash'),
+-- ('Shazaam'), ('BeastBoy'), ('Cyborg'),
+-- ('Green Lantern'), ('Hawkman'), ('Martain Manhunter'),
+-- ('Robin'), ('Starfire'), ('Raven'),
+-- ('Supergirl'), ('Batgirl'), ('Nightwing'),
+-- ('Dean'), ('Adam'), ('Kevin'),
+-- ('Sam'), ('Holly'), ('Hazel'),
+-- ('Jesse'), ('Nate'), ('Mike'),
+-- ('Shiela'), ('Rosie'), ('Emilia');
+
+--  SELECT * from justiceleague;
+
+-- Question3
+-- // Add a column to your new table (the new superheros) 
+-- for those who are interested in joining the Avengers. 
+-- Make this be randomly assigned.
+
+-- ALTER TABLE justiceleague ADD column interested int Not null AFTER name;
+--  SELECT * from justiceleague; 
+--  UPDATE justiceleague SET interested = CASE 
+--  WHEN rand() > 0.5 THEN 1 ELSE 0 END; 
+
+-- Question 4
+-- // Add a column to your new table (the new superheros) for their favorite Avenger
+-- (have it randomly choose between Anthony Edward "Tony" Stark, Robert Bruce Banner, & Victor Shade).
+
+-- ALTER TABLE justiceleague ADD column favorite varchar(50) Not null AFTER interested;
+--  UPDATE justiceleague SET favorite = CASE 
+--  WHEN rand() < 0.3 THEN 'Anthony Edward "Tony" Stark' 
+--  when  rand() < 0.7  then "Robert Bruce Banner" 
+--  else "Victor Shade" END; 
+--  SELECT * from justiceleague; 
+
+
+-- Question 5
+-- // Create an association between the two tables for who is interested in joining the Avengers.
+
+select avengers.name as avengers, justiceleague.name as justiceleague
+from justiceleague 
+join avengers
+on avengers.name = justiceleague.favorite;
+
+
+-- Question 6
+-- // Show your association and create a new table for that association.
+
+-- create table heroes as SELECT avengers.name as avengers, justiceleague.name as justiceleague, justiceleague.interested
+-- FROM avengers INNER JOIN justiceleague ON avengers.name = justiceleague.favorite 
+-- where justiceleague.interested = 1; 
+-- select * from heroes;
+
+-- Question 7
+-- //List all Avengers who have more than 1000 appearances in alphabetic order.
+
+-- select name from avengers where appearances > 1000 order by name;
+
+-- Question 8
+-- //What Avengers do not have more than 1000 appearances?
+
+-- select name, appearances from avengers where appearances < 1000 order by name;
+
+-- Question 9
+-- //Not more than 500?
+
+-- select name, appearances from avengers where appearances < 500 order by name;
+
+
+-- Question 10
+-- // Not more than 50?
+
+-- select name, appearances from avengers where appearances < 50 order by name;
+
+
+-- Question 11
+-- // Not more than 50 and female?
+
+-- select name, appearances  from avengers where appearances < 50 and gender like '%female%' order by name;
+
+-- Question 12
+-- // More than 150, male, and are full members?
+
+-- select name, appearances, honorary from avengers where appearances > 150 and gender like '%male%' and honorary like '%full%' order by name;
+
+
+-- Question 13
+-- //  Write a function that can add a new superhero to the Avengers 
+-- if they are interested in becoming an Avenger and if their favorite Avenger is Victor Shade.
+
+-- delimiter //
+-- create function addAvenger() returns text deterministic
+-- begin
+-- 	insert into avengers(name)
+-- 		select name from justiceleague
+-- 		where favorite = "Victor Shade"
+-- 			and interested = 1;
+--     return "done";
+-- end;
+-- delimiter;
+
+-- select avengers.addAvenger()
+-- select * from avengers
+
+-- Question 14
+-- //  Write a function that counts the total amount of records(rows/entries) in a given table.
+
+-- delimiter //
+-- create function countRows()
+-- 	returns int
+--     reads sql data
+--     deterministic
+--     begin
+-- 		return (select count(*) from avengers);
+-- 	end;
+-- delimiter;
+
+
+-- Question 15
+-- //  Call your totalRecords function on the avengers table. What is the output?
+-- select avengers.countRows()
+
+-- Question 16
+-- //  There is room for 3 new Avengers so invoke your newMember
+--  function 3 times to add 3 new members to the Avengers.
+
+-- select avengers.addAvenger()
+
+
+-- Question 17
+-- //  Show that the addition of new members was successful.
+
+-- select * from avengers
+
+-- Question 18
+-- //  Remove any tables that are not the original avengers table and 
+-- prove that they have been removed.
+
+-- drop table heroes;
+-- drop table justiceleague;
+-- drop function addAvenger;
+-- drop function countRows;
