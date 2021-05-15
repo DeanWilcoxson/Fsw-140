@@ -45,9 +45,7 @@ SELECT EPISODE, TITLE FROM ELEMENTS WHERE EPISODE IN (
    -- IN THIS QUERY, we are creating a table called 'SEASON_ONE' and inserting some data from the 'elements' table.
    
    -- B. -- ALTER 
-		ALTER TABLE SEASON_ONE ADD COLUMN TITLE VARCHAR(50);
-        INSERT INTO SEASON_ONE (TITLE)
-			SELECT TITLE FROM ELEMENTS WHERE EPISODE LIKE 'S01%';
+		ALTER TABLE SEASON_ONE ADD COLUMN TITLE VARCHAR(50) not null;
    -- IN THIS QUERY, we are using the alter statement to add a column called title to the table 'season_one'.
    
    -- C. -- DROP 
@@ -56,6 +54,18 @@ SELECT EPISODE, TITLE FROM ELEMENTS WHERE EPISODE IN (
 
 
 -- 5. -- Associations:
+USE SALESORDERS;
+SELECT CONCAT(CUSTFIRSTNAME, " ", CUSTLASTNAME) AS 'Full Name',  SHIPDATE, ORDERDATE FROM CUSTOMERS
+JOIN ORDERS ON  ORDERS.CUSTOMERID = CUSTOMERS.CUSTOMERID;
+	-- IN THIS QUERY, we are using the join clause to create an association to the orders table through the customer id. 
 
 
 -- 6. -- Joins and multiple table joins:
+SELECT PRODUCTNAME, VENDNAME, WHOLESALEPRICE 
+FROM PRODUCT_VENDORS 
+INNER JOIN VENDORS 
+	ON  VENDORS.VENDORID = PRODUCT_VENDORS.VENDORID 
+INNER JOIN PRODUCTS 
+	ON PRODUCTS.PRODUCTNUMBER = PRODUCT_VENDORS.PRODUCTNUMBER
+GROUP BY PRODUCTNAME ORDER BY PRODUCTNAME;
+	-- IN THIS QUERY, we are using multiple join clauses to get a list of products, the vendor for each product and wholesale price of each product. 
