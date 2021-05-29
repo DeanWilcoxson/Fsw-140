@@ -1,0 +1,49 @@
+body {
+    background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8p0Bi93aFFZmX7Ema4Ar9egYtNSnQgF3PCA&usqp=CAU");
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+}
+
+* {
+    color: white;
+}
+
+.Interact {
+    align-self: center;
+    background-color: green;
+    border-radius: 5px;
+}
+
+.name {
+    text-align: center;
+    color: red;
+}
+
+.url {
+    text-align: center;
+}
+
+.appearances {
+    text-align: center;
+}
+
+.gender {
+    text-align: center;
+}
+
+.years {
+    text-align: center;
+}
+
+.header {
+    text-align: center;
+    color: white;
+}
+
+.Nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}

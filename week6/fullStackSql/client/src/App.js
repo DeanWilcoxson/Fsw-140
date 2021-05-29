@@ -2,7 +2,7 @@ import React from 'react'
 import axios from 'axios'
 function App() {
   function getAllData(){
-    axios.get('/alldata')
+    axios.get('/data')
     .then(res => {
       mapItToLi(res.data)
       console.log(res.data)

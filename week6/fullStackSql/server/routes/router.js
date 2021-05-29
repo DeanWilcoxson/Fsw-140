@@ -10,7 +10,7 @@ const db = mysql.createConnection({
   database: "avengers",
 });
 
-sqlRouter.get('/alldata', (req, res, next) => {
+sqlRouter.get('/data', (req, res, next) => {
   let sql = "SELECT * FROM avengers"
   db.query(sql, (err, result)=> {
     if(err){
